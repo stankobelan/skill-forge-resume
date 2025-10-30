@@ -286,6 +286,293 @@ const CreativeTemplate = ({ resume }: { resume: Resume }) => {
   );
 };
 
+const MinimalistTemplate = ({ resume }: { resume: Resume }) => {
+  const { personalInfo, experience, education, skills, styleCustomizations } = resume;
+  
+  const formatDate = (date: Date | string) => {
+    if (!date) return '';
+    try {
+      if (typeof date === 'string') {
+        if (date === '') return '';
+        return format(new Date(date), 'MMM yyyy');
+      }
+      return format(date, 'MMM yyyy');
+    } catch (error) {
+      console.error('Date formatting error:', error);
+      return '';
+    }
+  };
+
+  return (
+    <div 
+      className="resume-preview" 
+      style={{ 
+        fontFamily: styleCustomizations.fontFamily,
+        fontSize: styleCustomizations.fontSize === 'small' ? '10px' : 
+                  styleCustomizations.fontSize === 'medium' ? '12px' : '14px',
+        lineHeight: `${1.5 * styleCustomizations.spacing}`,
+      }}
+    >
+      <div className="mb-8">
+        <h1 className="text-4xl font-light tracking-wide mb-1">
+          {personalInfo.firstName} {personalInfo.lastName}
+        </h1>
+        <div className="text-gray-600 text-sm">
+          {personalInfo.email && <span>{personalInfo.email}</span>}
+          {personalInfo.phone && <span className="ml-3">{personalInfo.phone}</span>}
+          {personalInfo.location && <span className="ml-3">{personalInfo.location}</span>}
+        </div>
+      </div>
+
+      {experience.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-sm font-semibold mb-4 tracking-widest uppercase">Experience</h2>
+          {experience.map((exp) => (
+            <div key={exp.id} className="mb-4">
+              <div className="flex justify-between items-baseline">
+                <span className="font-medium">{exp.position}</span>
+                <span className="text-xs text-gray-500">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+              </div>
+              <div className="text-sm text-gray-600">{exp.company}</div>
+              <p className="text-sm text-gray-700 mt-1">{exp.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {education.length > 0 && (
+        <div className="mb-8">
+          <h2 className="text-sm font-semibold mb-4 tracking-widest uppercase">Education</h2>
+          {education.map((edu) => (
+            <div key={edu.id} className="mb-3">
+              <div className="flex justify-between items-baseline">
+                <span className="font-medium">{edu.degree} in {edu.field}</span>
+                <span className="text-xs text-gray-500">{formatDate(edu.graduationDate)}</span>
+              </div>
+              <div className="text-sm text-gray-600">{edu.institution}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {skills.length > 0 && (
+        <div>
+          <h2 className="text-sm font-semibold mb-4 tracking-widest uppercase">Skills</h2>
+          <p className="text-sm text-gray-700">{skills.join(' • ')}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ExecutiveTemplate = ({ resume }: { resume: Resume }) => {
+  const { personalInfo, experience, education, skills, styleCustomizations } = resume;
+  
+  const formatDate = (date: Date | string) => {
+    if (!date) return '';
+    try {
+      if (typeof date === 'string') {
+        if (date === '') return '';
+        return format(new Date(date), 'MMM yyyy');
+      }
+      return format(date, 'MMM yyyy');
+    } catch (error) {
+      console.error('Date formatting error:', error);
+      return '';
+    }
+  };
+
+  return (
+    <div 
+      className="resume-preview" 
+      style={{ 
+        fontFamily: styleCustomizations.fontFamily,
+        fontSize: styleCustomizations.fontSize === 'small' ? '10px' : 
+                  styleCustomizations.fontSize === 'medium' ? '12px' : '14px',
+        lineHeight: `${1.5 * styleCustomizations.spacing}`,
+      }}
+    >
+      <div className="border-b-4 pb-4 mb-6" style={{ borderColor: styleCustomizations.primaryColor }}>
+        <h1 className="text-3xl font-bold tracking-tight mb-2" style={{ color: styleCustomizations.primaryColor }}>
+          {personalInfo.firstName} {personalInfo.lastName}
+        </h1>
+        <div className="text-gray-700 flex gap-4">
+          {personalInfo.email && <span>{personalInfo.email}</span>}
+          {personalInfo.phone && <span>{personalInfo.phone}</span>}
+          {personalInfo.location && <span>{personalInfo.location}</span>}
+        </div>
+      </div>
+
+      {experience.length > 0 && (
+        <div className="mb-6">
+          <h2 className="text-lg font-bold mb-4 pb-1 border-b" style={{ color: styleCustomizations.primaryColor }}>
+            EXECUTIVE EXPERIENCE
+          </h2>
+          {experience.map((exp) => (
+            <div key={exp.id} className="mb-5">
+              <div className="flex justify-between mb-1">
+                <span className="font-bold text-lg">{exp.position}</span>
+                <span className="text-gray-600 font-medium">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+              </div>
+              <div className="font-semibold text-gray-700 mb-2">{exp.company}</div>
+              <p className="text-gray-700">{exp.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {education.length > 0 && (
+        <div className="mb-6">
+          <h2 className="text-lg font-bold mb-4 pb-1 border-b" style={{ color: styleCustomizations.primaryColor }}>
+            EDUCATION
+          </h2>
+          {education.map((edu) => (
+            <div key={edu.id} className="mb-3">
+              <div className="flex justify-between">
+                <span className="font-bold">{edu.degree} in {edu.field}</span>
+                <span className="text-gray-600">{formatDate(edu.graduationDate)}</span>
+              </div>
+              <div className="font-medium text-gray-700">{edu.institution}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {skills.length > 0 && (
+        <div>
+          <h2 className="text-lg font-bold mb-4 pb-1 border-b" style={{ color: styleCustomizations.primaryColor }}>
+            CORE COMPETENCIES
+          </h2>
+          <div className="grid grid-cols-3 gap-2">
+            {skills.map((skill, index) => (
+              <div key={index} className="text-gray-700 font-medium">
+                • {skill}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ProfessionalTemplate = ({ resume }: { resume: Resume }) => {
+  const { personalInfo, experience, education, skills, styleCustomizations } = resume;
+  
+  const formatDate = (date: Date | string) => {
+    if (!date) return '';
+    try {
+      if (typeof date === 'string') {
+        if (date === '') return '';
+        return format(new Date(date), 'MMM yyyy');
+      }
+      return format(date, 'MMM yyyy');
+    } catch (error) {
+      console.error('Date formatting error:', error);
+      return '';
+    }
+  };
+
+  return (
+    <div 
+      className="resume-preview" 
+      style={{ 
+        fontFamily: styleCustomizations.fontFamily,
+        fontSize: styleCustomizations.fontSize === 'small' ? '10px' : 
+                  styleCustomizations.fontSize === 'medium' ? '12px' : '14px',
+        lineHeight: `${1.5 * styleCustomizations.spacing}`,
+      }}
+    >
+      <div className="text-center mb-6 pb-4 border-b-2" style={{ borderColor: styleCustomizations.primaryColor }}>
+        <h1 className="text-3xl font-bold mb-2">
+          {personalInfo.firstName} {personalInfo.lastName}
+        </h1>
+        <div className="text-gray-700">
+          {personalInfo.email && <span>{personalInfo.email}</span>}
+          {personalInfo.phone && personalInfo.email && <span className="mx-2">|</span>}
+          {personalInfo.phone && <span>{personalInfo.phone}</span>}
+          {personalInfo.location && (personalInfo.email || personalInfo.phone) && <span className="mx-2">|</span>}
+          {personalInfo.location && <span>{personalInfo.location}</span>}
+        </div>
+      </div>
+
+      {experience.length > 0 && (
+        <div className="mb-6">
+          <h2 
+            className="text-lg font-bold mb-3 pb-1" 
+            style={{ 
+              color: styleCustomizations.primaryColor,
+              borderBottom: `2px solid ${styleCustomizations.primaryColor}`
+            }}
+          >
+            PROFESSIONAL EXPERIENCE
+          </h2>
+          {experience.map((exp) => (
+            <div key={exp.id} className="mb-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <div className="font-bold">{exp.position}</div>
+                  <div className="italic text-gray-700">{exp.company}</div>
+                </div>
+                <div className="text-gray-600 text-right">
+                  {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
+                </div>
+              </div>
+              <p className="text-gray-700 mt-2">{exp.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {education.length > 0 && (
+        <div className="mb-6">
+          <h2 
+            className="text-lg font-bold mb-3 pb-1" 
+            style={{ 
+              color: styleCustomizations.primaryColor,
+              borderBottom: `2px solid ${styleCustomizations.primaryColor}`
+            }}
+          >
+            EDUCATION
+          </h2>
+          {education.map((edu) => (
+            <div key={edu.id} className="mb-3">
+              <div className="flex justify-between">
+                <div>
+                  <div className="font-bold">{edu.degree} in {edu.field}</div>
+                  <div className="text-gray-700">{edu.institution}</div>
+                </div>
+                <div className="text-gray-600">{formatDate(edu.graduationDate)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {skills.length > 0 && (
+        <div>
+          <h2 
+            className="text-lg font-bold mb-3 pb-1" 
+            style={{ 
+              color: styleCustomizations.primaryColor,
+              borderBottom: `2px solid ${styleCustomizations.primaryColor}`
+            }}
+          >
+            SKILLS
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {skills.map((skill, index) => (
+              <span key={index} className="text-gray-700 font-medium">
+                {skill}{index < skills.length - 1 ? ' •' : ''}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const ResumePreview = () => {
   const { resume } = useResume();
 
@@ -297,6 +584,12 @@ const ResumePreview = () => {
         return <ClassicTemplate resume={resume} />;
       case 'creative':
         return <CreativeTemplate resume={resume} />;
+      case 'minimalist':
+        return <MinimalistTemplate resume={resume} />;
+      case 'executive':
+        return <ExecutiveTemplate resume={resume} />;
+      case 'professional':
+        return <ProfessionalTemplate resume={resume} />;
       default:
         return <ModernTemplate resume={resume} />;
     }
