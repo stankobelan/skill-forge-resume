@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/components/layouts/MainLayout';
 import { Eye } from 'lucide-react';
@@ -47,20 +47,22 @@ const templates = [
 
 const TemplateGallery = () => {
   const { updateTemplate } = useResume();
+  const navigate = useNavigate();
 
   const handleSelectTemplate = (templateId: string) => {
     updateTemplate(templateId);
+    navigate('/builder');
   };
 
   return (
     <MainLayout>
-      <div className="bg-gradient-to-b from-purple-50 to-white py-16">
+      <div className="bg-gradient-to-b from-primary/5 to-background py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            <h1 className="text-3xl font-extrabold text-foreground sm:text-4xl">
               Resume Templates
             </h1>
-            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
               Choose from our professionally designed templates to get started.
               Each template is fully customizable to match your personal style.
             </p>
@@ -68,34 +70,30 @@ const TemplateGallery = () => {
           
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {templates.map((template) => (
-              <div key={template.id} className="bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:shadow-md hover:-translate-y-1">
-                <div className="aspect-w-3 aspect-h-4 bg-gray-200">
+              <div key={template.id} className="bg-card rounded-lg shadow-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-border">
+                <div className="relative bg-muted h-64">
                   <img
                     src={template.image}
-                    alt={template.name}
-                    className="w-full h-64 object-cover"
+                    alt={`${template.name} resume template preview`}
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                    <Link to={`/templates/${template.id}`}>
-                      <Button variant="secondary" className="bg-white text-gray-800 hover:bg-gray-100">
-                        <Eye className="h-4 w-4 mr-2" />
-                        Preview
-                      </Button>
-                    </Link>
+                  <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                    <Button variant="secondary" size="sm">
+                      <Eye className="h-4 w-4 mr-2" />
+                      Preview
+                    </Button>
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-bold text-lg text-gray-900">{template.name}</h3>
-                  <p className="text-gray-600 mt-2">{template.description}</p>
-                  <div className="mt-6 flex space-x-3">
+                  <h3 className="font-bold text-lg text-card-foreground">{template.name}</h3>
+                  <p className="text-muted-foreground mt-2 text-sm">{template.description}</p>
+                  <div className="mt-6">
                     <Button
                       variant="default"
-                      className="w-full bg-resume-primary hover:bg-resume-secondary"
+                      className="w-full"
                       onClick={() => handleSelectTemplate(template.id)}
                     >
-                      <Link to="/builder" className="w-full">
-                        Use This Template
-                      </Link>
+                      Use This Template
                     </Button>
                   </div>
                 </div>
@@ -106,36 +104,36 @@ const TemplateGallery = () => {
       </div>
       
       {/* FAQ Section */}
-      <div className="bg-white py-16">
+      <div className="bg-background py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900">
+            <h2 className="text-3xl font-extrabold text-foreground">
               Frequently Asked Questions
             </h2>
           </div>
           <div className="mt-12 max-w-3xl mx-auto">
             <div className="space-y-8">
               <div>
-                <h3 className="text-lg font-medium text-gray-900">Can I customize the templates?</h3>
-                <p className="mt-2 text-gray-600">
+                <h3 className="text-lg font-medium text-foreground">Can I customize the templates?</h3>
+                <p className="mt-2 text-muted-foreground">
                   Yes, all templates are fully customizable. You can change colors, fonts, spacing, and more to match your personal style.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900">Can I download my resume as a PDF?</h3>
-                <p className="mt-2 text-gray-600">
+                <h3 className="text-lg font-medium text-foreground">Can I download my resume as a PDF?</h3>
+                <p className="mt-2 text-muted-foreground">
                   Absolutely! Once you've created your resume, you can download it as a high-quality PDF ready for job applications.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900">Are the templates ATS-friendly?</h3>
-                <p className="mt-2 text-gray-600">
+                <h3 className="text-lg font-medium text-foreground">Are the templates ATS-friendly?</h3>
+                <p className="mt-2 text-muted-foreground">
                   Yes, our templates are designed to be ATS (Applicant Tracking System) friendly to ensure your resume gets past automated screening systems.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900">Can I create multiple resumes?</h3>
-                <p className="mt-2 text-gray-600">
+                <h3 className="text-lg font-medium text-foreground">Can I create multiple resumes?</h3>
+                <p className="mt-2 text-muted-foreground">
                   Yes, you can create multiple resumes for different job applications or industries to tailor your application to each opportunity.
                 </p>
               </div>
